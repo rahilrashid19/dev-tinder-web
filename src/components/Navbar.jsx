@@ -14,6 +14,7 @@ const Navbar = () => {
             <div className="w-10 rounded-full">
               <img
                 alt="Tailwind CSS Navbar component"
+                style={{ objectFit: "cover" }}
                 src="https://www.nbc.com/sites/nbcblog/files/2022/07/the-office-how-to-watch.jpg"
               />
             </div>
