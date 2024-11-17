@@ -4,6 +4,7 @@ import Signup from "./auth-components/Signup";
 import Feed from "./Feed";
 import Login from "./auth-components/Login";
 import Footer from "./Footer";
+import Profile from "./Profile";
 
 const HomePage = () => {
   return (
@@ -19,6 +20,7 @@ const HomePage = () => {
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/feed" element={<Feed />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </main>
 
