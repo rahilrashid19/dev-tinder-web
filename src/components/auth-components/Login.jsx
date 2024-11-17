@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addUsers } from "../../utils/slices/userSlice";
+import { BASE_URL } from "../../utils/constants";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const Login = () => {
   const submitForm = async (values) => {
     try {
       const res = await axios.post(
-        "http://localhost:7777/api/login",
+        BASE_URL + "api/login",
         {
           email: values.email,
           password: values.password,
