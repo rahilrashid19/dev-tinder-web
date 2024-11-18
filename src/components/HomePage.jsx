@@ -15,6 +15,20 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const logout = async () => {
+    const data = await axios.post(
+      BASE_URL + "/logout",
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+    if (data.data) {
+      dispatch(removeUsers());
+      navigate("/");
+    }
+  };
   const getLoggedInUser = async () => {
     try {
       const user = await axios.get(BASE_URL + "/viewProfile", {
@@ -31,7 +45,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (location.pathname === "/") {
-      dispatch(removeUsers());
+      logout();
     } else {
       getLoggedInUser();
     }

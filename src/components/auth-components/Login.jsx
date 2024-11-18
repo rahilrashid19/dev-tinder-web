@@ -11,6 +11,8 @@ const Login = () => {
   const [loginSuccessful, setLoginSuccessful] = useState(false);
   const dispatch = useDispatch();
 
+  const [error, setError] = useState("");
+
   const { register, handleSubmit, formState } = useForm();
   const { errors, isDirty } = formState;
 
@@ -31,7 +33,7 @@ const Login = () => {
         setLoginSuccessful(true);
       }
     } catch (error) {
-      console.error("Login failed", error);
+      setError(error?.response?.data.error);
     }
   };
 
@@ -69,7 +71,6 @@ const Login = () => {
                     id="email"
                     placeholder="Please enter your email"
                     {...register("email", {
-                      required: true,
                       pattern: {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                         message: "Invalid Email",
@@ -104,6 +105,7 @@ const Login = () => {
                   </p>
                 </div>
                 <div>
+                  <p className="text-rose-500">{error}</p>
                   <button
                     type="submit"
                     className={`w-full px-4 py-2 text-white rounded-md 
