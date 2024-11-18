@@ -1,8 +1,9 @@
-import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
-  const location = useLocation();
-  const user = location.state;
+  const loggedInUser = useSelector((state) => state.user);
+
+  const user = loggedInUser;
 
   return (
     <div className="max-w-lg mx-auto mt-10">

@@ -17,7 +17,7 @@ const Login = () => {
   const submitForm = async (values) => {
     try {
       const res = await axios.post(
-        BASE_URL + "api/login",
+        BASE_URL + "/login",
         {
           email: values.email,
           password: values.password,
