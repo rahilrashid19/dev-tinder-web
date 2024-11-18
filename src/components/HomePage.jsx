@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Signup from "./auth-components/Signup";
 import Feed from "./Feed";
@@ -8,13 +8,13 @@ import Profile from "./Profile";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
-import { addUsers } from "../utils/slices/userSlice";
+import { addUsers, removeUsers } from "../utils/slices/userSlice";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const getLoggedInUser = async () => {
     try {
       const user = await axios.get(BASE_URL + "/viewProfile", {
@@ -30,7 +30,11 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    getLoggedInUser();
+    if (location.pathname === "/") {
+      dispatch(removeUsers());
+    } else {
+      getLoggedInUser();
+    }
   }, []);
 
   return (
