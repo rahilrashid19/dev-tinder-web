@@ -1,15 +1,20 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addToFeed } from "../utils/slices/feedSlice";
 
 const Feed = () => {
-  const [feedData, setFeedData] = useState(null);
+  const feedData = useSelector((state) => state.feed.feedUsers);
+  const dispatch = useDispatch();
+  // const [feedData, setFeedData] = useState(null);
   const getFeedData = async () => {
     try {
       const data = await axios.get(BASE_URL + "/feed", {
         withCredentials: true,
       });
-      setFeedData(data.data.feedUsers);
+      // setFeedData(data.data.feedUsers);
+      dispatch(addToFeed(data.data.feedUsers));
     } catch (error) {
       console.log(error.message);
     }
@@ -28,7 +33,9 @@ const Feed = () => {
               <img src={feed.profilePicture} alt="user" />
             </figure>
             <div className="card-body">
-              <h2 className="card-title">{feed.firstName + feed.lasName}</h2>
+              <h2 className="card-title">
+                {feed.firstName + " " + feed.lastName}
+              </h2>
               <p>{feed.bio}</p>
               <div className="card-actions justify-end">
                 <button className="btn btn-primary">Interested</button>
