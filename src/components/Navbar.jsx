@@ -29,6 +29,9 @@ const Navbar = () => {
         <Link to="/feed" className="btn btn-ghost text-xl">
           👨‍💻 Dev Tinder
         </Link>
+        <Link to="/connections" className="btn btn-ghost text-xl">
+          Connections
+        </Link>
       </div>
       {user?.firstName && user?.lastName && (
         <div className="flex-none gap-2">

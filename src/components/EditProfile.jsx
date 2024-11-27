@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addUsers } from "../utils/slices/userSlice";
 /* eslint-disable react/prop-types */
 const EditProfile = ({ user }) => {
+  const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
   const { register, handleSubmit, formState, reset } = useForm();
 
@@ -24,6 +25,10 @@ const EditProfile = ({ user }) => {
       );
       if (res) {
         dispatch(addUsers(res.data.loggedInUser));
+        setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+        }, 4000);
       }
     } catch (error) {
       console.log(error);
@@ -202,6 +207,13 @@ const EditProfile = ({ user }) => {
           </div>
         </div>
       </form>
+      {showToast && (
+        <div className="toast toast-top toast-start mt-20">
+          <div className="alert alert-info">
+            <span>Profile Updated Successfully</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

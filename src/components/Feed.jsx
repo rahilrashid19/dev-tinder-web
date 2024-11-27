@@ -25,21 +25,30 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className="flex">
+    <div className="flex justify-around p-6">
       {feedData?.map((feed) => {
         return (
-          <div className="card bg-base-100 w-96 shadow-xl" key={feed._id}>
-            <figure>
-              <img src={feed.profilePicture} alt="user" />
+          <div
+            className="relative bg-white w-96 h-[500px] shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105"
+            key={feed._id}
+          >
+            <figure className="w-full h-3/5">
+              <img
+                src={feed.profilePicture}
+                alt="user"
+                className="w-full h-full object-cover"
+              />
             </figure>
-            <div className="card-body">
-              <h2 className="card-title">
+            <div className="absolute bottom-0 w-full bg-white bg-opacity-90 p-4">
+              <h2 className="text-xl font-bold text-gray-800">
                 {feed.firstName + " " + feed.lastName}
               </h2>
-              <p>{feed.bio}</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Interested</button>
-                <button className="btn btn-primary">Ignore</button>
+              <p className="text-sm text-gray-600 mt-2">{feed.bio}</p>
+              <div className="flex justify-between mt-4">
+                <button className="btn btn-primary w-1/2 mr-2">
+                  Interested
+                </button>
+                <button className="btn btn-secondary w-1/2">Ignore</button>
               </div>
             </div>
           </div>

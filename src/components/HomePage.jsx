@@ -10,6 +10,7 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addUsers, removeUsers } from "../utils/slices/userSlice";
 import { useEffect } from "react";
+import Connections from "./Connections";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -65,6 +66,7 @@ const HomePage = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/connections" element={<Connections />} />
         </Routes>
       </main>
 
