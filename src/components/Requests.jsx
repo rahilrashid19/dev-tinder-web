@@ -15,9 +15,21 @@ const Requests = () => {
     }
   };
 
+  const reviewRequests = async (status, id) => {
+    try {
+      await axios.post(
+        BASE_URL + "/reviewRequest" + "/" + status + "/" + id,
+        {},
+        { withCredentials: true }
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   useEffect(() => {
     getRequests();
-  }, []);
+  }, [requests]);
 
   if (!requests) {
     return <h1>No Requests Found</h1>;
@@ -58,10 +70,16 @@ const Requests = () => {
                       {req.fromUserId.age} years old
                     </p>
                     <div className="flex space-x-4 mt-4">
-                      <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                      <button
+                        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                        onClick={() => reviewRequests("accepted", req._id)}
+                      >
                         Accept
                       </button>
-                      <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                      <button
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                        onClick={() => reviewRequests("rejected", req._id)}
+                      >
                         Reject
                       </button>
                     </div>

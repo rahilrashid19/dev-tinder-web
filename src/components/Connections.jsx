@@ -1,15 +1,28 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const Connections = () => {
+  const userId = useSelector((state) => state.user._id);
+  console.log(userId);
   const [connections, setConnections] = useState(null);
   const getConnections = async () => {
     try {
       const res = await axios.get(BASE_URL + "/connections", {
         withCredentials: true,
       });
-      setConnections(res.data.connections);
+
+      const conn = res.data.connections.flatMap((connection) => [
+        connection.toUserId,
+        connection.fromUserId,
+      ]);
+
+      const filteredConnections = conn.filter(
+        (connection) => connection._id !== userId
+      );
+
+      setConnections(filteredConnections);
     } catch (error) {
       console.log(error);
     }
@@ -40,22 +53,18 @@ const Connections = () => {
                   <div className="card-body flex flex-col items-center text-center">
                     <div className="w-24 h-24 mb-4">
                       <img
-                        src={con.toUserId.profilePicture}
-                        alt={`${con.toUserId.firstName}'s profile`}
+                        src={con.profilePicture}
+                        alt={`${con.firstName}'s profile`}
                         className="w-full h-full object-cover rounded-full"
                       />
                     </div>
                     <h2 className="text-lg font-bold text-gray-800">
-                      {con.toUserId.firstName} {con.toUserId.lastName}
+                      {con.firstName} {con.lastName}
                     </h2>
+                    <p className="text-sm text-gray-600 mt-1">{con.gender}</p>
+                    <p className="text-sm text-gray-600 mt-1">{con.bio}</p>
                     <p className="text-sm text-gray-600 mt-1">
-                      {con.toUserId.gender}
-                    </p>
-                    <p className="text-sm text-gray-600 mt-1">
-                      {con.toUserId.bio}
-                    </p>
-                    <p className="text-sm text-gray-600 mt-1">
-                      {con.toUserId.age} years old
+                      {con.age} years old
                     </p>
                   </div>
                 </div>
