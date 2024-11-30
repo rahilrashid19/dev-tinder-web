@@ -25,11 +25,11 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className="flex justify-around p-6">
+    <div className="flex flex-wrap justify-around gap-6 p-6">
       {feedData?.map((feed) => {
         return (
           <div
-            className="relative bg-white w-96 h-[500px] shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105"
+            className="relative bg-white w-80 h-[400px] shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105"
             key={feed._id}
           >
             <figure className="w-full h-3/5">
