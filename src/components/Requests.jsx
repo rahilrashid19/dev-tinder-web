@@ -17,11 +17,15 @@ const Requests = () => {
 
   const reviewRequests = async (status, id) => {
     try {
-      await axios.post(
+      const response = await axios.post(
         BASE_URL + "/reviewRequest" + "/" + status + "/" + id,
         {},
         { withCredentials: true }
       );
+      if (response) {
+        const newRequestData = requests.filter((req) => req._id !== id);
+        setRequests(newRequestData);
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -29,7 +33,7 @@ const Requests = () => {
 
   useEffect(() => {
     getRequests();
-  }, [requests]);
+  }, []);
 
   if (!requests) {
     return <h1>No Requests Found</h1>;

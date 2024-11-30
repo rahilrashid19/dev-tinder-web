@@ -1,20 +1,36 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addToFeed } from "../utils/slices/feedSlice";
+import { useEffect, useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { addToFeed } from "../utils/slices/feedSlice";
 
 const Feed = () => {
-  const feedData = useSelector((state) => state.feed.feedUsers);
-  const dispatch = useDispatch();
-  // const [feedData, setFeedData] = useState(null);
+  // const feedData = useSelector((state) => state.feed.feedUsers);
+  // const dispatch = useDispatch();
+  const [feedData, setFeedData] = useState(null);
   const getFeedData = async () => {
     try {
       const data = await axios.get(BASE_URL + "/feed", {
         withCredentials: true,
       });
-      // setFeedData(data.data.feedUsers);
-      dispatch(addToFeed(data.data.feedUsers));
+      setFeedData(data.data.feedUsers);
+      // dispatch(addToFeed(data.data.feedUsers));
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const acceeptOrIgnoreRequest = async (status, userId) => {
+    try {
+      const response = await axios.post(
+        BASE_URL + "/sendRequest" + "/" + status + "/" + userId,
+        {},
+        { withCredentials: true }
+      );
+      if (response) {
+        const newCards = feedData.filter((feed) => feed._id !== userId);
+        setFeedData(newCards);
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -22,7 +38,7 @@ const Feed = () => {
 
   useEffect(() => {
     getFeedData();
-  }, []);
+  }, [feedData]);
 
   return (
     <div className="flex flex-wrap justify-around gap-6 p-6">
@@ -45,10 +61,18 @@ const Feed = () => {
               </h2>
               <p className="text-sm text-gray-600 mt-2">{feed.bio}</p>
               <div className="flex justify-between mt-4">
-                <button className="btn btn-primary w-1/2 mr-2">
+                <button
+                  className="btn btn-primary w-1/2 mr-2"
+                  onClick={() => acceeptOrIgnoreRequest("interested", feed._id)}
+                >
                   Interested
                 </button>
-                <button className="btn btn-secondary w-1/2">Ignore</button>
+                <button
+                  className="btn btn-secondary w-1/2"
+                  onClick={() => acceeptOrIgnoreRequest("ignored", feed._id)}
+                >
+                  Ignore
+                </button>
               </div>
             </div>
           </div>
