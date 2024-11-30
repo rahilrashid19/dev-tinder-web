@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { addUsers, removeUsers } from "../utils/slices/userSlice";
 import { useEffect } from "react";
 import Connections from "./Connections";
+import Requests from "./Requests";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -67,6 +68,7 @@ const HomePage = () => {
           <Route path="/feed" element={<Feed />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/connections" element={<Connections />} />
+          <Route path="/requests" element={<Requests />} />
         </Routes>
       </main>
 

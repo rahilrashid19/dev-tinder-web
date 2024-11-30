@@ -32,6 +32,9 @@ const Navbar = () => {
         <Link to="/connections" className="btn btn-ghost text-xl">
           Connections
         </Link>
+        <Link to="/requests" className="btn btn-ghost text-xl">
+          Requests
+        </Link>
       </div>
       {user?.firstName && user?.lastName && (
         <div className="flex-none gap-2">
